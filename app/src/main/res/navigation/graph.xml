@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph"
+    app:startDestination="@id/first_fragment">
+
+    <fragment
+        android:id="@+id/first_fragment"
+        android:name="com.example.android.examenadolfo.presentation.ui.MapLocationsFragment"
+        android:label="ListUsersFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/second_fragment"
+        tools:layout="@layout/fragment_list_words"
+        android:name="com.example.android.examenadolfo.presentation.ui.ListTvsFragments"
+        android:label="ListWordsFragment" />
+
+</navigation>

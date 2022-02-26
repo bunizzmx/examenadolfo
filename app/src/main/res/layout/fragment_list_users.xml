@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mimap"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardElevation="5dp"
+        android:layout_margin="10dp"
+        app:contentPadding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:textColor="@color/white"
+            android:id="@+id/num_points"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:text="Posiciones: 1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>
