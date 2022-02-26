@@ -1,5 +1,6 @@
 package com.example.android.examenadolfo.presentation.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.ContentUris
@@ -11,10 +12,10 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -26,12 +27,14 @@ import androidx.navigation.findNavController
 import com.example.android.examenadolfo.App
 import com.example.android.examenadolfo.R
 import com.example.android.examenadolfo.databinding.ActivityMainBinding
-import com.example.android.examenadolfo.domain.data.WordsRepository
+import com.example.android.examenadolfo.domain.data.TvsRepository
 import com.example.android.examenadolfo.presentation.BaseViewModelActivity
+import com.example.android.examenadolfo.presentation.ui.tvs.UsersViewModel
 import com.example.android.examenadolfo.utils.CONSTANTES.REQUEST_IMAGE_CAPTURE
 import com.example.android.examenadolfo.utils.CONSTANTES.REQUEST_PICK_IMAGE
+import com.example.android.examenadolfo.utils.DialogPermissions
+import com.example.android.examenadolfo.utils.DialogPermissionsGPS
 import com.example.android.examenadolfo.utils.DialogProgress
-import com.example.android.examenadolfo.utils.MyCustomDialog
 import com.example.android.examenadolfo.utils.NetworkConnection
 import com.example.android.examenadolfo.utils.treking.TrackingService
 import com.frentetecnologicoponce.elder.presentation.ViewModelFactory
@@ -44,12 +47,15 @@ import java.io.File
 class MainActivity : BaseViewModelActivity<UsersViewModel>() {
 
     @Inject
-    lateinit var loginRepository: WordsRepository
+    lateinit var loginRepository: TvsRepository
     val db = Firebase.firestore
     var dialog = DialogProgress()
+    var locationPermissionGranted:Boolean=false
 
     lateinit var storage: FirebaseStorage
     private lateinit var navController: NavController
+    var PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+
 
     private val authViewModel by viewModels<UsersViewModel> {
         ViewModelFactory( loginRepository,this, intent.extras)
@@ -64,7 +70,6 @@ class MainActivity : BaseViewModelActivity<UsersViewModel>() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = findNavController(R.id.main_fragment)
-        // setupActionBarWithNavController(navController)
         setupSmoothBottomMenu()
         if (Build.VERSION.SDK_INT >= 21) {
             val window: Window = this.window
@@ -73,7 +78,7 @@ class MainActivity : BaseViewModelActivity<UsersViewModel>() {
             window.setStatusBarColor(this.resources.getColor(R.color.colorPrimary))
         }
         initServices()
-
+        getLocationPermission()
         //Inicializa el TrackingService
         TrackingService.startLocationTracking(this)
 
@@ -85,13 +90,11 @@ class MainActivity : BaseViewModelActivity<UsersViewModel>() {
         var file = Uri.fromFile(File(uri))
         val riversRef = storageRef.child("images/${file.lastPathSegment}")
         var uploadTask = riversRef.putFile(file)
-        // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener {
             dialog.dialog?.dismiss()
-            Log.e("UPLOAD_PHOTO","-->FAILURE")
         }.addOnSuccessListener { taskSnapshot ->
+            Toast.makeText(this,getString(R.string.sinc_success),Toast.LENGTH_LONG).show()
             dialog.dialog?.dismiss()
-            Log.e("UPLOAD_PHOTO","-->succes")
         }
     }
 
@@ -127,11 +130,9 @@ class MainActivity : BaseViewModelActivity<UsersViewModel>() {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 val bitmap = data?.extras?.get("data") as Bitmap
-                //ivImage.setImageBitmap(bitmap)
             }
             else if (requestCode == REQUEST_PICK_IMAGE) {
-                Log.e("REQUEST_PICK_IMAGE","s")
-                handleImageOnKitkat(data)
+                uploadImage(data)
             }
         }
     }
@@ -152,10 +153,9 @@ class MainActivity : BaseViewModelActivity<UsersViewModel>() {
     }
 
     @TargetApi(19)
-    private fun handleImageOnKitkat(data: Intent?) {
+    private fun uploadImage(data: Intent?) {
         var imagePath: String? = null
         val uri = data!!.data
-        //DocumentsContract defines the contract between a documents provider and the platform.
         if (DocumentsContract.isDocumentUri(this, uri)){
             val docId = DocumentsContract.getDocumentId(uri)
             if ("com.android.providers.media.documents" == uri?.authority){
@@ -177,7 +177,34 @@ class MainActivity : BaseViewModelActivity<UsersViewModel>() {
             imagePath = uri?.path
         }
         if (NetworkConnection.hasInternetConnection(this))
-         uploadImage(imagePath.toString())
+            uploadImage(imagePath.toString())
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        locationPermissionGranted = false
+        when (requestCode) {
+            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
+                if (grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locationPermissionGranted = true
+                }else{
+                    DialogPermissionsGPS().show(this.supportFragmentManager,"")
+                }
+            }
+        }
+    }
+
+    private fun getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.android.examenadolfo.presentation.ui
+package com.example.android.examenadolfo.presentation.ui.tvs
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,10 +11,10 @@ import com.bumptech.glide.Glide
 import com.example.android.examenadolfo.R
 import com.example.android.examenadolfo.data.network.model.response.Tv
 
-class TvAdapter (context :Context,listener:OpenUserListener): RecyclerView.Adapter<TvAdapter.CajerosHolder>() {
+class TvAdapter (context :Context,listener: OpenTvListener): RecyclerView.Adapter<TvAdapter.CajerosHolder>() {
     val TYPE_TV :Int =0
     lateinit var context:Context
-    var  listener:OpenUserListener
+    var  listener: OpenTvListener
     lateinit var items:ArrayList<Tv>
     init {
         this.items= arrayListOf()
@@ -67,7 +67,7 @@ class TvAdapter (context :Context,listener:OpenUserListener): RecyclerView.Adapt
             vote_average = itemView.findViewById(R.id.vote_average)
         }
 
-        fun bind(item: Tv, listener: OpenUserListener) = with(itemView) {
+        fun bind(item: Tv, listener: OpenTvListener) = with(itemView) {
             name_tv.text = item.original_name
             vote_average.text = item.vote_average.toString()
             Glide.with(context)

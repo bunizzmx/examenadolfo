@@ -53,22 +53,22 @@ So, we are leaving the template code in. -->
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="@dimen/general_margin"
+                android:layout_height="@dimen/general_margin"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/general_margin"
                 app:cardBackgroundColor="@color/colorPrimary"
-                app:cardCornerRadius="10dp" />
+                app:cardCornerRadius="@dimen/general_margin" />
 
             <TextView
+                style="@style/IXText.textNormal"
                 android:id="@+id/tipes_results"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="@dimen/general_margin"
+                android:layout_marginRight="@dimen/general_margin"
                 android:textColor="@color/black"
-                android:textSize="10dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -81,7 +81,8 @@ So, we are leaving the template code in. -->
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:contentDescription="@string/add_word"
+
+
         android:src="@drawable/ic_baseline_camera_alt_24"/>
     <include android:visibility="gone" android:id="@+id/no_data_item" layout="@layout/no_data"/>
 

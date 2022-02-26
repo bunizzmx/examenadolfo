@@ -19,4 +19,5 @@ limitations under the License. -->
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="btn_corner_radius">8dp</dimen>
+    <dimen name="general_margin">10dp</dimen>
 </resources>

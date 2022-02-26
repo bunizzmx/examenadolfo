@@ -19,9 +19,9 @@
         <com.google.android.material.textview.MaterialTextView
             android:textColor="@color/white"
             android:id="@+id/num_points"
-            android:textSize="10dp"
+            android:textSize="14dp"
             android:textStyle="bold"
-            android:text="Posiciones: 1"
+            android:text="@string/position_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </com.google.android.material.card.MaterialCardView>

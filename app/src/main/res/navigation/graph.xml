@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/first_fragment"
-        android:name="com.example.android.examenadolfo.presentation.ui.MapLocationsFragment"
+        android:name="com.example.android.examenadolfo.presentation.ui.map.MapLocationsFragment"
         android:label="ListUsersFragment" >
     </fragment>
     <fragment
         android:id="@+id/second_fragment"
-        tools:layout="@layout/fragment_list_words"
-        android:name="com.example.android.examenadolfo.presentation.ui.ListTvsFragments"
+        tools:layout="@layout/fragment_list_tvs"
+        android:name="com.example.android.examenadolfo.presentation.ui.tvs.ListTvsFragments"
         android:label="ListWordsFragment" />
 
 </navigation>

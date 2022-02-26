@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.examenadolfo.utils.EventObserver
+import com.example.android.examenadolfo.utils.MyCustomDialog
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -40,17 +41,11 @@ abstract class BaseViewModelActivity<T : BaseViewModel> : AppCompatActivity() {
         })
 
         baseViewModel.serviceError.observe(this, EventObserver { message ->
-          /*  mx.com.android.invex.presentation.dialog.AlertDialog.Builder(this)
-                .withMessage(message)
-                .withDismissCallback {
-                    if (isOnBackPressed!!) onBackPressed()
-                }
-                .show()*/
+            MyCustomDialog().show(this.supportFragmentManager, "MyCustomFragment")
         })
 
         baseViewModel.connectionError.observe(this, EventObserver {
-           /* ErrorConnectionDialog.newInstance()
-                .show(supportFragmentManager, ErrorConnectionDialog.TAG)*/
+            MyCustomDialog().show(this.supportFragmentManager, "MyCustomFragment")
         })
     }
 

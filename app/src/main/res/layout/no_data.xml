@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_large"
-        android:text="Intentalo más tarde"
+        android:text="@string/no_data_desc"
         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />

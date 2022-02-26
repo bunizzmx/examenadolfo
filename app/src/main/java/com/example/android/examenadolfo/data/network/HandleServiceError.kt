@@ -3,6 +3,7 @@ package  com.example.android.examenadolfo.data.network
 
 import com.example.android.examenadolfo.data.network.exception.NetworkException
 import com.example.android.examenadolfo.data.network.exception.ServiceException
+import com.example.android.examenadolfo.utils.CONSTANTES.SERVER__ERROR
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
@@ -25,7 +26,7 @@ abstract class HandleServiceError {
                 throw NetworkException(
                     httpCode = response.code(),
                     exception = response.message(),
-                    message = "El servidor no puede atender temporalmente su solicitud debido a tiempo de inactividad o mantenimiento. Por favor, inténtelo de nuevo más tarde"
+                    message = SERVER__ERROR
                 )
             }
             try {
@@ -66,15 +67,7 @@ abstract class HandleServiceError {
         }
     }
 
-    open fun <T> applyRequestBody(input: T): RequestBody {
-        val builder = GsonBuilder().disableHtmlEscaping()
-            .create()
 
-        return builder.toJson(input)
-            .replace("\\n", "")
-            .toRequestBody(APPLICATION_JSON)
-
-    }
 
     companion object {
         val APPLICATION_JSON: MediaType = "application/json; charset=utf-8".toMediaType()

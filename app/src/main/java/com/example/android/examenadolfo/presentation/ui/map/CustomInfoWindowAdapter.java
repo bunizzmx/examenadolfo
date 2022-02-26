@@ -1,4 +1,4 @@
-package com.example.android.examenadolfo.presentation.ui;
+package com.example.android.examenadolfo.presentation.ui.map;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -14,8 +14,6 @@ import com.google.android.gms.maps.model.Marker;
 
 public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-    // These are both viewgroups containing an ImageView with id "badge" and two TextViews with id
-    // "title" and "snippet".
     private final View mWindow;
 
     private final View mContents;

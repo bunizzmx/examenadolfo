@@ -33,7 +33,11 @@ limitations under the License. -->
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/dm_sans_regular</item>
     </style>
-
+    <style name="IXText.textNormal">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/dm_sans_medium</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

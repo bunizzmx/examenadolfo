@@ -1,9 +1,9 @@
-package  com.example.android.examenadolfo.presentation.ui
+package  com.example.android.examenadolfo.presentation.ui.tvs
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.android.examenadolfo.data.network.model.response.User
-import com.example.android.examenadolfo.domain.data.WordsRepository
+import com.example.android.examenadolfo.R
+import com.example.android.examenadolfo.domain.data.TvsRepository
 import com.example.android.examenadolfo.presentation.BaseViewModel
 import com.example.android.examenadolfo.utils.Event
 
@@ -14,8 +14,16 @@ import io.reactivex.schedulers.Schedulers
 
 
 import javax.inject.Inject
-import com.example.android.examenadolfo.data.network.model.response.DetailUsersResponse
 import com.example.android.examenadolfo.data.network.model.response.Tv
+import com.example.android.examenadolfo.utils.CONSTANTES
+import com.example.android.examenadolfo.utils.treking.LocationsFirestore
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,32 +31,28 @@ import kotlinx.coroutines.launch
 
 class UsersViewModel
 @Inject constructor(
-    private val loginRepository: WordsRepository
+    private val loginRepository: TvsRepository
 ) : BaseViewModel() {
 
     private val disposable = CompositeDisposable()
 
-    private val _login = MutableLiveData<Event<Int>>()
-    val login get() = _login
-
-    private val _register = MutableLiveData<Event<User>>()
-    val register get() = _register
-
-
     private val _userresponse = MutableLiveData<Event<ArrayList<Tv>>>()
     val userresponse get() = _userresponse
-
-    private val _userdetail = MutableLiveData<Event<DetailUsersResponse>>()
-    val userdetail get() = _userdetail
-
 
     private val _save_succes = MutableLiveData<Event<Boolean>>()
     val save_succes get() = _save_succes
 
-    public  var mTvsLocal: List<Tv>? = null
+    var mTvsLocal: List<Tv>? = null
+
+    private val _mpins = MutableLiveData<Event<Task<QuerySnapshot>>>()
+    val mpins get() = _mpins
 
     private val _mTvsLocallivedata = MutableLiveData<Event<List<Tv>>>()
     val mTvsLocallivedata get() = _mTvsLocallivedata
+
+
+    private val _is_local= MutableLiveData<Event<String>>()
+    val is_local get() = _is_local
 
 
 
@@ -62,9 +66,7 @@ class UsersViewModel
     internal fun getLocalTVS() {
         showLoading()
         CoroutineScope(Dispatchers.IO).launch {
-            Log.e("SAVE_LOCAL","s")
             mTvsLocal = loginRepository.getTvsOffline()
-            Log.e("SAVE_LOCAL","aaaa"+mTvsLocal!!.size)
             _mTvsLocallivedata.postValue(Event(mTvsLocal) as Event<List<Tv>>?)
         }
     }
@@ -87,6 +89,23 @@ class UsersViewModel
             serviceError(it.message!!)
         })
         disposable.add(subscriber)
+    }
+
+
+    fun getCurrent_pin() {
+        val firebase = FirebaseFirestore.getInstance()
+         firebase.collection(CONSTANTES.COLLECTION_GPS).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    var counter = 0
+                    var total = 0
+                    total = task.result.size()
+                    is_local.postValue(Event(total.toString()))
+                    mpins.postValue(Event(task))
+                }
+            }
+
+
     }
 
 

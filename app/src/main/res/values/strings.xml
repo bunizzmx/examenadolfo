@@ -13,12 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <resources>
-    <string name="app_name">RoomWordsSample</string>
-    <string name="action_settings">Settings</string>
-    <string name="hint_word">Word…</string>
-    <string name="button_save">Save</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
-    <string name="add_word">Add word</string>
+    <string name="app_name">Examen Adolfo</string>
     <string name="ellipsis">&#8230;</string>
     <string name="message_no_internet_connection">Tu dispositivo no cuenta con una conexión a internet, vuelve a intentarlo.</string>
     <string name="action_accept">Aceptar</string>
@@ -27,4 +22,10 @@ limitations under the License. -->
     <string name="position_l">Posición</string>
     <string name="fecha">Fecha : </string>
     <string name="last_location">Última posición : </string>
+    <string name="permisions">Permisos Requeridos</string>
+    <string name="permisions_desc">Para una mejor experiencia requerimos de esos permisos</string>
+    <string name="no_data_title">No hay Datos</string>
+    <string name="no_data_desc">Intentalo más tarde</string>
+    <string name="sinc_success">Sincronizada correctamente</string>
+
 </resources>

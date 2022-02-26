@@ -1,6 +1,11 @@
 package com.example.android.examenadolfo.utils.treking;
 
 import static com.example.android.examenadolfo.utils.CONSTANTES.COLLECTION_GPS;
+import static com.example.android.examenadolfo.utils.CONSTANTES.DATE;
+import static com.example.android.examenadolfo.utils.CONSTANTES.LAT;
+import static com.example.android.examenadolfo.utils.CONSTANTES.LATITUDE;
+import static com.example.android.examenadolfo.utils.CONSTANTES.LON;
+import static com.example.android.examenadolfo.utils.CONSTANTES.LONGITUDE;
 import static com.example.android.examenadolfo.utils.treking.Constants.CHANNEL_ID;
 import static com.example.android.examenadolfo.utils.treking.Constants.TITLE_PUSH;
 import static com.google.android.gms.location.LocationServices.FusedLocationApi;
@@ -47,8 +52,6 @@ public class TrackingService extends IntentService {
     private static Location lastLocation;
     private static PendingIntent sPendingIntent;
     private static GoogleApiClient sGoogleApiClient;
-    private boolean isUpdating = false;
-
     public TrackingService() {
         super(TAG);
     }
@@ -100,7 +103,6 @@ public class TrackingService extends IntentService {
 
             Intent locationUpdatedIntent = new Intent(this, TrackingService.class);
             locationUpdatedIntent.setAction(ACTION_LOCATION_UPDATED);
-
             Location location = FusedLocationApi.getLastLocation(sGoogleApiClient);
             if (location != null && location.getLatitude() != 0.0 && location.getLongitude() != 0.0) {
                 lastLocation = location;
@@ -109,16 +111,12 @@ public class TrackingService extends IntentService {
                         FusedLocationProviderApi.KEY_LOCATION_CHANGED, location);
                 startService(lastLocationIntent);
             }
-
             LocationRequest locationRequest = new LocationRequest()
                     .setPriority(100)
                     .setSmallestDisplacement(MIN_DISTANCE)
                     .setFastestInterval(MIN_TIME_INTERVAL)
                     .setInterval(TIME_INTERVAL);
-
-
             sPendingIntent = PendingIntent.getService(this, 0, locationUpdatedIntent, 0);
-
             FusedLocationApi.requestLocationUpdates(
                     sGoogleApiClient, locationRequest, sPendingIntent);
         } else {
@@ -134,27 +132,22 @@ public class TrackingService extends IntentService {
 
         if (location != null && location.getLatitude() != 0.0 && location.getLongitude() != 0.0) {
             lastLocation = location;
-
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             Map<String, Object> user = new HashMap<>();
-            user.put("lon", String.valueOf(lastLocation.getLongitude()));
-            user.put("lat", String.valueOf(lastLocation.getLatitude()));
-            user.put("date", DateUtils.simpleDate());
-
+            user.put(LON, String.valueOf(lastLocation.getLongitude()));
+            user.put(LAT, String.valueOf(lastLocation.getLatitude()));
+            user.put(DATE, DateUtils.simpleDate());
             db.collection(COLLECTION_GPS)
                     .add(user)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             showNotification(String.valueOf(lastLocation.getLongitude()),String.valueOf(lastLocation.getLatitude()),DateUtils.simpleDate());
-                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding document", e);
-                        }
+                        public void onFailure(@NonNull Exception e) {  }
                     });
 
             }
@@ -169,7 +162,7 @@ public class TrackingService extends IntentService {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_launcher_background)
                     .setContentTitle(TITLE_PUSH)
-                    .setContentText("LATITUDE: " + lat +"  LONGITUDE:" + lon + "  /  "+ date)
+                    .setContentText(LATITUDE + lat + LONGITUDE + lon + "  /  "+ date)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);

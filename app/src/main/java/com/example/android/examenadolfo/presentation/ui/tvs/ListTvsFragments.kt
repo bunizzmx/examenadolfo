@@ -1,10 +1,8 @@
-package com.example.android.examenadolfo.presentation.ui
+package com.example.android.examenadolfo.presentation.ui.tvs
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,18 +17,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 
-import com.example.android.examenadolfo.databinding.FragmentListWordsBinding
 import com.example.android.examenadolfo.presentation.common.viewBinding
 import com.example.android.examenadolfo.utils.EventObserver
 
 
 import com.example.android.examenadolfo.R
 import com.example.android.examenadolfo.data.network.model.response.Tv
+import com.example.android.examenadolfo.databinding.FragmentListTvsBinding
 import com.example.android.examenadolfo.utils.CONSTANTES.*
 import com.example.android.examenadolfo.utils.DialogPermissions
 import com.example.android.examenadolfo.utils.spanedGridLayoutManager.SpanSize
 import com.example.android.examenadolfo.utils.spanedGridLayoutManager.SpannedGridLayoutManager
-import java.util.zip.GZIPOutputStream
 import kotlin.collections.ArrayList
 
 
@@ -39,15 +36,15 @@ class ListTvsFragments  : Fragment() {
 
 
     private val authViewModel by activityViewModels<UsersViewModel>()
-    private val binding by viewBinding(FragmentListWordsBinding::bind)
-    lateinit var  adapter:TvAdapter
+    private val binding by viewBinding(FragmentListTvsBinding::bind)
+    lateinit var  adapter: TvAdapter
     lateinit var layoutManager : SpannedGridLayoutManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_words, container, false)
+        return inflater.inflate(R.layout.fragment_list_tvs, container, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -61,7 +58,8 @@ class ListTvsFragments  : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun applyBinding() {
         with(binding) {
-            adapter = TvAdapter(requireActivity(),object  : OpenUserListener{
+            adapter = TvAdapter(requireActivity(),object  :
+                OpenTvListener {
                 override fun open() { }
             })
             binding.recyclerview.adapter = adapter

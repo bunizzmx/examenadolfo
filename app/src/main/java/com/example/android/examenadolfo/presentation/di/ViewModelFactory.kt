@@ -6,12 +6,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 
-import com.example.android.examenadolfo.domain.data.WordsRepository
-import com.example.android.examenadolfo.presentation.ui.UsersViewModel
+import com.example.android.examenadolfo.domain.data.TvsRepository
+import com.example.android.examenadolfo.presentation.ui.tvs.UsersViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
-    private val loginRepository: WordsRepository,
+    private val loginRepository: TvsRepository,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle?
 ) :

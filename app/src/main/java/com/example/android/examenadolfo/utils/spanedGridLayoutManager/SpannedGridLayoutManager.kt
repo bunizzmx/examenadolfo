@@ -14,13 +14,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 
-/**
- * A [android.support.v7.widget.RecyclerView.LayoutManager] which layouts and orders its views
- * based on width and height spans.
- *
- * @param orientation Whether the views will be layouted and scrolled in vertical or horizontal
- * @param spans How many spans does the layout have per row or column
- */
 open class SpannedGridLayoutManager(val orientation: Orientation,
                                val spans: Int) : RecyclerView.LayoutManager() {
 
