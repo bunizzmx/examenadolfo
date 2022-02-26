@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "782777886182",
+    "project_id": "examenvas",
+    "storage_bucket": "examenvas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782777886182:android:25fd08b2bda165f3dbe227",
+        "android_client_info": {
+          "package_name": "com.example.android.examenadolfo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782777886182-49v1meulhar512jt5t16i6k5e3vnue02.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.examenadolfo",
+            "certificate_hash": "ae16ecb850a2b8bbf962cd1d5f1d77f5fffe69c7"
+          }
+        },
+        {
+          "client_id": "782777886182-m150gsnfkg1i6s2gsn0g7icrmntj8j21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsVGqcV65YhcJ2NI4lqMP2TS9huTC30cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782777886182-m150gsnfkg1i6s2gsn0g7icrmntj8j21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

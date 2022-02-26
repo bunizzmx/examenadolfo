@@ -83,6 +83,7 @@ So, we are leaving the template code in. -->
         android:layout_margin="16dp"
         android:contentDescription="@string/add_word"
         android:src="@drawable/ic_baseline_camera_alt_24"/>
+    <include android:visibility="gone" android:id="@+id/no_data_item" layout="@layout/no_data"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
